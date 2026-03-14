@@ -45,6 +45,9 @@ graph TD
     Orion -->|"Reports"| Noa
     Kokoa -->|"Weight value"| Noa
 
+    Domain_Layer --> Execution_Layer
+    Domain_Layer --> External
+
     Sebastian -->|"Reports"| Kokoa
     Hermes -->|"Feeds"| Chase
 
