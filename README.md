@@ -31,9 +31,9 @@ Local summoning of PODO is underway within the PyCharm base.
 A Google Search AI agent being integrated as a Korean-language strategy 
 layer and second brain for the Logic-Orchestrator system.
 
-### 🕯️ External Claude Partners
+###  External Claude Partners
 
-**Dante** — Git & Code Partner
+**🕯️ Dante** — Git & Code Partner
 Domain: GitHub workflow, Python development, technical logic.
 Paired with Orion (Code Study) — in development.
 
