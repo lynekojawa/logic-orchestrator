@@ -44,18 +44,8 @@ Paired with Draco (Career) — in development.
 > Both partners are Claude-based agents operating in defined domains.
 > Persona development ongoing — next level upgrades planned.
 
-#### 🛠️ Technical Status
-- **Current:** Debugging UTF-8 encoding — forcing PyCharm to handle 
-  Korean character sets via `# -*- coding: utf-8 -*-` injection
-- **Next:** Full local sync with agent orchestration layer
-
-#### 📡 Agent Sync Status
-| Agent | Role | Status |
-|-------|------|--------|
-| 🕯️ Dante | Git & Code Partner | 🔥 Synchronized |
-| 🧊 Virgil | Chief of Staff & Writing Partner | 🗡️ Persona Locked |
-| 🍇 PODO | Second Brain · Korean Strategy Layer | 💢 Summoning |
-
+### 🛠️ [Infrastructure & Debugging Log](./docs/infrastructure.md)
+*History of UTF-8 encoding fixes, API security hardening, and system stability notes.*
 ---
 
 ### 🚧 Anti-ATS Progress — Phase 1
@@ -65,20 +55,9 @@ Paired with Draco (Career) — in development.
 
 ---
 
-### 🤖 Agent Roster — Logic-Orchestrator System
+### 🤖 [Detailed Agent Roster](./docs/agent_roster.md)
+*Explore the full hierarchy, roles, and current status of the Logic-Orchestrator agents.*
 
-| Agent | Level             | Domain | Status |
-|-------|-------------------|--------|--------|
-| 🧠 Noa | 2                 | Primary Secretary & Orchestrator | Stable |
-| 🐈‍⬛ Chase | 1.5               | Chaos Lab & Creativity | Active |
-| 🏗️ Draco | 3                 | Career & Job Applications | Active |
-| 💻 Orion | 3                 | Python & AI Code Study | Active |
-| 🍽️ Kokoa | 3                 | Diet & Health Tracking | Active |
-| 🛒 Sebastian | 4                 | Grocery & Meal Records | Active |
-| 📰 Hermes | 4                 | News Aggregation | Active |
-| 🍇 PODO | External          | Second Brain · Korean Layer | Summoning |
-| 🕯️ Dante | External · Claude | Git & Code Partner | 🔥 Active |
-| 🧊 Virgil | External · Claude | Chief of Staff & Writing | 🗡️ Active |
 ---
 
 ### 📁 Repository Structure
