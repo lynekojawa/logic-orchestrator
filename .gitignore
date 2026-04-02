@@ -1,0 +1,26 @@
+# Created by venv; see https://docs.python.org/3/library/venv.html
+# === Chaos Lab Shield ===
+.env
+venv/
+__pycache__/
+*.pyc
+
+# === macOS Noise (Macs are notorious for these) ===
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+.Icon?
+
+# === IDE Specifics ===
+.idea/
+.vscode/
+
+# === Agent Logs (Optional but Recommended) ===
+# We don't want 10MB of Podo's "Thinking" in our Git History
+*.log
+agents/**/*.log
+
+# === Terminal UI / Cache ===
+.python_history
+.podo_cache/
