@@ -1,4 +1,8 @@
-#Fixed Stop_Words
+from collections import Counter
+
+#Today(4/8) we will change the match the with the weighted the keywords.
+#problems with s characters
+
 STOP_WORDS = {
             "a", "an", "the", "and", "but", "or", "for", "nor", "so", "yet",
             "at", "by", "from", "in", "into", "of", "off", "on", "onto", "out",
@@ -16,7 +20,6 @@ STOP_WORDS = {
             "nor", "not", "own", "same", "than", "too", "very", "s", "t", "can", "will"
         }
 
-#Define new functions so that we won't double the code
 def get_user_input(prompt_message):
     print(prompt_message)
 
@@ -30,7 +33,6 @@ def get_user_input(prompt_message):
 
 def sanitize_text(raw_text):
     lower_raw_text = raw_text.lower()
-    #Changed clean_buffer="" to [] to make it efficiency, this caused changing += character to clean_buffer.append string to list
     clean_buffer = []
     for character in lower_raw_text:
         if character.isalnum() or character in (" ", "-"):
@@ -38,12 +40,19 @@ def sanitize_text(raw_text):
 
     clean_text = "".join(clean_buffer)
     word_list = clean_text.split()
-    return set(word_list)
+    stemmed_list =[]
+    for word in word_list:
+        if word.endswith('s') and not word.endswith('ss') and len(word) > 3:
+            stemmed_list.append(word[:-1])
+        else:
+            stemmed_list.append(word)
+    return list(word_list)
 
 
-
+#Change full_jd = input to full_jd = get_user_input
+#It was working well in pycharm's environment, hoewever it may only read first line of JD on the web environment.
 if __name__ == "__main__":
-    full_jd = input("Paste your Job Description here")
+    full_jd = get_user_input("Paste your Job Description here")
 
     if not full_jd.strip():
         print("Error: No input provided")
@@ -52,19 +61,25 @@ if __name__ == "__main__":
         if not full_resume.strip():
             print("Error: No resume provided.")
         else:
-            jd_signal = sanitize_text(full_jd) - STOP_WORDS
-            resume_signal = sanitize_text(full_resume) - STOP_WORDS
+            jd_words = sanitize_text(full_jd)
+            jd_counts= Counter(jd_words)
+            #List basket with condition, items not item
+            clean_counts = Counter({k: v for k, v in jd_counts.items() if k not in STOP_WORDS})
+            jd_signal = set(clean_counts.keys())
+
+            resume_words = sanitize_text(full_resume)
+            resume_counts = Counter(resume_words)
+            resume_signal = set(resume_counts.keys())
+
 #Build ATS coverage: modified Jaccard |Resume\intersect JD|/|JD|
-            #intersection
+
             matched_keywords = jd_signal & resume_signal
-            #difference?
             missing_keywords = jd_signal - matched_keywords
-            #score
             match_score = (len(matched_keywords) / len(jd_signal)) * 100 if jd_signal else 0
 
             print(f"Match Score {match_score}%")
             print(f"Matched({len(matched_keywords)}):{matched_keywords}")
             print(f"Missing({len(missing_keywords)}):{missing_keywords}")
-
+            print(f"Top 5 Keywords: {clean_counts.most_common(5)}")
 
 
