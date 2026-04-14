@@ -1,15 +1,12 @@
+#adding UI build
+import streamlit as st
+#imported package
 from collections import Counter
 import re
 
 #re=regular Expression
-#Today(4/10) We are going to fix following three problems pulled by Dante(Claude): prob 1: stemmer prob 2: minor experience error prob
-# 3: Missing keywords output is incomplete
-#Progress: create constant STEM_EXCLUSION to prevent aggressive stemming, add the larger filter so that when the experience level is not detected
-#this will comeout as no number detected, Added more words in constant, add one more rule with word done with es, changed the output format
-#the es stemming rule maybe too aggressive suggestions 1. add some es words like series, aries, species into stop words or 2. maybe other?
-#Extension to phase 4 to fix  2. Dashboard UI so that user can use this easier 3. Error Resilieness.
-#few question arose: on the job search site how does that 40%, 60% score is possible, what is actual setting for the real company?
-
+#Today(4/14): new monitor arrived! we are starting phase 4 for building a UI today so that this will look pretty lol.
+#progress: install streamlit,
 #Constant=fixed
 STOP_WORDS = {
             "a", "an", "the", "and", "but", "or", "for", "nor", "so", "yet",
@@ -85,59 +82,61 @@ def extract_experience(text):
     exp_pattern = r"(\d+)\+?\s*(?:years?|yrs?)"
     return re.findall(exp_pattern, text, re.IGNORECASE)
 
-#Inputs=variables
-if __name__ == "__main__":
-    full_jd = get_user_input("Paste your Job Description here")
+#operator for streamlit
+st.set_page_config(layout="wide")
+st.title("ATS Visual Commander Dashboard")
+st.write("ATS logic is now visual.")
+#Room first furniture later
+topcol1, topcol2, topcol3 = st.columns(3)
 
-    if not full_jd.strip():
-        print("Error: No input provided")
-    else:
-        jd_years_req = extract_experience(full_jd)
-        if jd_years_req:
-            years_req = max([int(y) for y in jd_years_req])
-            if years_req != 0:
-                print(f"\n Detected Experience Requirement: {years_req}+ years")
-            else:
-                print("No Experience Requirement")
-        else:
-            print("No Experience level provided")
+left_JD, right_Resume=st.columns(2)
+with left_JD:
+    jd_text = st.text_area("Paste your Job Description here", height=500)
+with right_Resume:
+    resume_file = st.file_uploader("Upload your Job Description here", type=['pdf', 'txt'])
 
-        full_resume = get_user_input("---Paste your resume here (Type 'Done' to finish---)")
+if jd_text and resume_file:
+    years_req = 0
+    match_score = 0
+    if resume_file is not None:
+        resume_text = resume_file.read().decode("utf-8")
 
-        if not full_resume.strip():
-            print("Error: No resume provided.")
-        else:
-            jd_words = sanitize_text(full_jd)
-            jd_counts= Counter(jd_words)
-            #List basket with condition, items not item
-            clean_counts = Counter({k: v for k, v in jd_counts.items() if k not in STOP_WORDS})
-            jd_signal = set(clean_counts.keys())
+    resume_words = sanitize_text(resume_text)
+    resume_counts = Counter(resume_words)
+    resume_signal = set(resume_counts.keys())
 
-            resume_words = sanitize_text(full_resume)
-            resume_counts = Counter(resume_words)
-            resume_signal = set(resume_counts.keys())
+    jd_years_req = extract_experience(jd_text)
+    jd_words = sanitize_text(jd_text)
+    jd_counts = Counter(jd_words)
+    clean_counts = Counter({k: v for k, v in jd_counts.items() if k not in STOP_WORDS})
+    jd_signal = set(clean_counts.keys())
+    if jd_years_req:
+        years_req = max([int(y) for y in jd_years_req])
+
+    matched_keywords = jd_signal & resume_signal
+    missing_keywords = jd_signal - matched_keywords
+    total_weight = sum(clean_counts.values())
+    match_weight = sum(clean_counts[word] for word in matched_keywords)
+
+    match_score = (match_weight / total_weight) * 100 if jd_signal else 0
+    high_value_missing = sorted(missing_keywords, key=lambda x: clean_counts[x], reverse=True)[:10]
+    with topcol1:
+        st.metric(label="Match Score", value=f"{match_score: .2f}%")
+    with topcol2:
+        st.metric(label="Required Experience", value=f"{years_req}")
+    # no logic yet
+    with topcol3:
+        st.metric(label="Candidate Experience", value="0")
+else:
+    topcol1.metric(label="Match Score", value ="0%")
+    topcol2.metric(label="Required Experience", value ="0 yrs")
+    topcol3.metric(label="Candidate Experience", value = "0 yrs")
 
 
-#Build ATS coverage: modified weighted sums so that it will be more accurate.
 
-            matched_keywords = jd_signal & resume_signal
-            missing_keywords = jd_signal - matched_keywords
-            total_weight = sum(clean_counts.values())
-            match_weight = sum(clean_counts[word] for word in matched_keywords)
-            match_score = (match_weight / total_weight) * 100 if jd_signal else 0
 
-#Outputs=The results from running a code
-            print(f"\n ***[ATS Analysis Results]***")
-            print(f"Match Score {match_score:.2f}%")
-#Outputs with sorted
-            high_value_missing = sorted(missing_keywords, key=lambda x: clean_counts[x], reverse=True)[:10]
 
-            print(f"\nMatched Keywords({len(matched_keywords)})")
-            for word in sorted(matched_keywords):
-                print(f" - {word}")
 
-            print(f"\n Top 10 Missing Keywords: ")
-            for word in high_value_missing:
-                print(f" - {word}: mentioned {clean_counts[word]} times in JD")
+
 
 
