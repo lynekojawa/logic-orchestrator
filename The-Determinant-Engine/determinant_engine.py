@@ -1,6 +1,9 @@
 # 4/16: Determinant calculator begin, goal is building a determinant calculator and eventually get UI
 # ... many new tool detected. @property, defining class then under the class defining functions.
-# For any project phase 1 is the hardest ugh!
+# For any project phase 1 is the hardest ugh! Phase 1 is over determinant calculator is set now and we can calculate upto 2x2
+#I was thinking about making each input for each number but we will do this more detail once we get into phase 4 for UI
+#Adding a feature for GLn(Fq) to determine determinant.
+
 class Matrix:
     def __init__(self, matrix_data):
         row_length = [len(row) for row in matrix_data]
@@ -44,6 +47,15 @@ class Matrix:
         else:
             raise ValueError("In Progress... Laplace expansion coming soon! :D")
 
+#phase 2 function
+def get_minor(self, row_idx, col_idx):
+    n, m = self.shape
+    sub_data = [
+        [self.matrix[r][c] for c in range(m) if c != col_idx]
+        for r in range(n) if r != row_idx
+    ]
+
+    return Matrix(sub_data)
 
 # --- Test Strike Zone ---
 if __name__ == "__main__":
