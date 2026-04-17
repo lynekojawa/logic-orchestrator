@@ -8,53 +8,49 @@ import re
 
 #re=regular Expression
 
-#Today(4/15): 1. adding logic gaps in col3 V 2. fixing minor detail 3. add top 10 missed word V 4. adding pdf to txt converter V
-#progress: add logic gap, added top tem missing words feature,
-#!! my logic cannot detect numbers in words eg: more than six years is not detected. problem resolved
-#For categorizing vocabs, so i thought it was inefficient to update those words in stop words with creating new sets and update
-#but after I noticed it seems like efficient in control those key words by the types of industry standard, and will help users to get better
-#match score. There are two many words I am missing...
-#Generally, I just grab any JD from linkedin, and I got one company matched 20.39% so let's see if I am getting a rejection letter from them!
+#Today(4/17): Finally it is friday so that I can use claude agent to fix this for free! yay!
+#progress: polishing sanitize_text, there were some dead code. fixed indentation. delete get_user_input function since it is no longer used.
+#polished following: word_to_num, double extration on pdf, duplicated and consusion on the stop words, UI text typo
 
 
 #Constant=fixed
 #stop words contains articles, verbs, some common words, famous company, job platform...etc.
 STOP_WORDS = {
-            "a", "an", "the", "and", "but", "or", "for", "nor", "so", "yet",
-            "at", "by", "from", "in", "into", "of", "off", "on", "onto", "out",
-            "over", "to", "up", "with", "as", "if", "when", "while", "because",
-            "until", "through", "between", "before", "after", "during", "under", "above",
-            "i", "me", "my", "mine", "we", "us", "our", "ours", "you", "your",
-            "yours", "he", "him", "his", "she", "her", "hers", "it", "its", "they",
-            "them", "their", "theirs", "this", "that", "these", "those", "am", "is",
-            "are", "was", "were", "be", "been", "being",
-            "have", "has", "had", "do", "does", "did", "can", "could", "will",
-            "would", "shall", "should", "may", "might", "must",
-            "just", "only", "very", "also", "even", "still", "then", "there", "here",
-            "who", "what", "where", "when", "why", "how", "which", "all", "any",
-            "both", "each", "few", "more", "most", "other", "some", "such", "no",
-            "nor", "not", "own", "same", "than", "too", "very", "s", "t", "can", "will",
-            "about", "above", "across", "after", "afterwards", "again", "against", "all", "almost", "alone",
-            "along", "already", "also", "although", "always", "among", "amongst", "amount", "any", "anyhow",
-        "anyone", "anything", "anyway", "anywhere", "around", "back", "became", "become", "becomes", "becoming",
-        "beforehand", "behind", "being", "below", "beside", "besides", "beyond", "both", "bottom", "brief",
-        "certain", "certainly", "done", "during", "each", "either", "else", "elsewhere", "empty", "enough",
-        "even", "ever", "every", "everyone", "everything", "everywhere", "except", "further", "get", "give",
-        "go", "had", "hardly", "hasnt", "hence", "hereupon", "herself", "himself", "howbeit", "however",
-        "ie", "inc", "indeed", "latter", "latterly", "least", "less", "ltd", "maybe", "meantime",
-        "meanwhile", "might", "moreover", "mostly", "namely", "neither", "never", "nevertheless", "next", "nobody",
-        "none", "noone", "nothing", "nowhere", "often", "otherwise", "perhaps", "rather", "re", "said",
-        "see", "seem", "seemed", "seeming", "seems", "serious", "several", "since", "somewhere", "still",
-        "thence", "thereafter", "thereby", "therefore", "therein", "thereupon", "together", "towards", "upon", "via",
-        "meta", "google", "amazon", "apple", "netflix", "microsoft", "uber", "airbnb", "igt",
-        "linkedin", "tiktok", "twitter", "facebook", "instagram", "adobe", "salesforce",
-        "team", "people", "business", "product", "approach", "build", "partner", "help",
-        "work", "support", "mission", "vision", "impact", "strategy", "deliver", "drive",
-        "opportunity", "requirement", "responsibility", "qualified", "candidate", "role",
-        "experience", "preferred", "minimum", "qualification", "equal", "employment",
-        "opportunity", "affirmative", "action", "employer", "disability", "veteran",
-        "relevant", "field", "equivalent", "practical", "degree", "bachelors", "masters", "phd"
-        }
+    "a", "about", "above", "across", "action", "adobe", "affirmative", "after", "afterwards",
+    "again", "against", "airbnb", "all", "almost", "alone", "along", "already", "also",
+    "although", "always", "am", "amazon", "among", "amongst", "amount", "an", "and",
+    "any", "anyhow", "anyone", "anything", "anyway", "anywhere", "apple", "approach",
+    "are", "around", "as", "at", "back", "bachelors", "be", "became", "become",
+    "becomes", "becoming", "been", "before", "beforehand", "behind", "being", "below",
+    "benefit", "beside", "besides", "between", "beyond", "both", "bottom", "brief",
+    "build", "business", "but", "by", "can", "candidate", "certain", "certainly",
+    "could", "degree", "deliver", "did", "disability", "do", "does", "done", "drive",
+    "during", "each", "either", "else", "elsewhere", "employer", "employment", "empty",
+    "enough", "equal", "equivalent", "even", "ever", "every", "everyone", "everything",
+    "everywhere", "except", "experience", "facebook", "few", "field", "for", "from",
+    "further", "get", "give", "go", "google", "had", "hardly", "has", "hasnt", "have",
+    "he", "help", "hence", "her", "here", "hereupon", "hers", "herself", "him",
+    "himself", "his", "how", "howbeit", "however", "i", "ie", "if", "igt", "impact",
+    "in", "inc", "indeed", "instagram", "into", "is", "it", "its", "just", "latter",
+    "latterly", "least", "less", "linkedin", "ltd", "masters", "may", "maybe", "me",
+    "meantime", "meanwhile", "meta", "microsoft", "might", "minimum", "mission",
+    "more", "moreover", "most", "mostly", "must", "my", "mine", "namely", "neither",
+    "netflix", "never", "nevertheless", "next", "no", "nobody", "none", "noone",
+    "nor", "not", "nothing", "nowhere", "of", "off", "often", "on", "only", "onto",
+    "opportunity", "or", "other", "otherwise", "our", "ours", "out", "over", "own",
+    "partner", "people", "perhaps", "phd", "practical", "preferred", "product",
+    "qualification", "qualified", "rather", "re", "relevant", "requirement",
+    "responsibility", "role", "s", "said", "salesforce", "same", "see", "seem",
+    "seemed", "seeming", "seems", "serious", "several", "shall", "she", "should",
+    "since", "so", "some", "somewhere", "still", "strategy", "such", "support",
+    "t", "team", "than", "that", "the", "their", "theirs", "them", "themselves",
+    "then", "thence", "there", "thereafter", "thereby", "therefore", "therein",
+    "thereupon", "these", "they", "this", "those", "through", "tiktok", "to",
+    "together", "too", "towards", "twitter", "uber", "under", "until", "up",
+    "upon", "very", "via", "vision", "was", "we", "were", "what", "when", "where",
+    "which", "while", "who", "why", "will", "with", "work", "would", "yet", "you",
+    "your", "yours", "veteran"
+}
 #Some common legal terms that appears in JD, for right now I have separated from the list
 HR_LEGAL_FLUFF = {
     "gender", "compensation", "accommodation", "applicable", "understand",
@@ -92,23 +88,8 @@ word_to_num = {
 }
 
 #Function=fixed
-def get_user_input(prompt_message):
-    print(prompt_message)
 
-    lines = []
-    while True:
-        line = input()
-        if line.strip().upper() == "DONE":
-            break
-        lines.append(line)
-    return " ".join(lines)
-
-#Changed split to re.split
 def sanitize_text(raw_text):
-    lower_raw_text = raw_text.lower()
-    clean_buffer = []
-#Change old clean_buffer to one line to be efficient and save line
-
     clean_input = raw_text.lower()
     word_list = re.split(r"[^a-zA-Z0-9]+", clean_input)
 
@@ -142,7 +123,7 @@ left_JD, right_Resume=st.columns(2)
 with left_JD:
     jd_text = st.text_area("Paste your Job Description here", height=500)
 with right_Resume:
-    resume_file = st.file_uploader("Upload your Job Description here", type=['pdf', 'txt'])
+    resume_file = st.file_uploader("Upload your Resume here", type=['pdf', 'txt'])
     st.markdown("""
     <style>
     
@@ -161,7 +142,7 @@ if jd_text and resume_file:
         for page in pdf_reader.pages:
             content = page.extract_text()
             if content:
-                resume_text += page.extract_text()
+                resume_text += content
     else:
         resume_text = resume_file.read().decode("utf-8")
     #resume cleaner
@@ -171,7 +152,7 @@ if jd_text and resume_file:
     #add word=number converter
     processed_resume = resume_text.lower()
     for word, digit in word_to_num.items():
-        processed_resume = processed_resume.replace(word, digit)
+        processed_resume = re.sub(r'\b'+ word + r'\b', digit, processed_resume)
 
     #experience detector
     resume_years_detected = extract_experience(processed_resume)
@@ -221,8 +202,8 @@ if jd_text and resume_file:
         cols = st.columns(5)
         for i, word in enumerate(high_value_missing):
             cols[i % 5].info(f"**{word}**")
-        else:
-            st.success("You've captured all critical keywords! Perfect match! :D")
+    else:
+        st.success("You've captured all critical keywords! Perfect match! :D")
 
 
 
