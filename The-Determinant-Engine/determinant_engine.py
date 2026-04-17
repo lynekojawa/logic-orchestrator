@@ -1,4 +1,6 @@
 # 4/17 today we are getting into phase 2 of the determinant calculator.
+#Polishing function calculator determinant, apparently my old version wasn't working at the case of 1x1 and 2x2 it is fixed
+#
 #spend some time why can we calculate determinant in square matrix and because we need to get AA^-1 = I
 #the sign of determinant means + moved exactly same - moved in mirror, and how much it get larger in terms of the area or volume
 #deleted get_base function, it is merged into determinant_calculator since it handles all, and saving some lines.
@@ -49,24 +51,23 @@ class Matrix:
             raise ValueError("Determinant can only be calculated for a Square matrix!")
 
         n,m = self.shape
-        res = 0
+
         if n == 1:
-            return self.matrix[0][0]
+            result = self.matrix[0][0]
         elif n == 2:
-            return (self.matrix[0][0] * self.matrix[1][1]) - (self.matrix[0][1] * self.matrix[1][0])
+            result = (self.matrix[0][0] * self.matrix[1][1]) - (self.matrix[0][1] * self.matrix[1][0])
 
         else:
-            total_det = 0
+            result = 0
             for j in range(m):
                 sign = 1 if j %2 ==0 else -1
                 minor = self.get_minor(0,j)
 
                 sub_det = minor.calculate_determinant(mod)
-                total_det += sign * self.matrix[0][j] * sub_det
-            res = total_det
+                result += sign * self.matrix[0][j] * sub_det
         if mod is not None:
-            return res % mod
-        return res
+            return result % mod
+        return result
 
 # --- Test Strike Zone ---
 if __name__ == "__main__":
@@ -75,7 +76,7 @@ if __name__ == "__main__":
         n = int(input("Enter the number of Rows (n): "))
         m = int(input("Enter the number of Columns (m): "))
 
-        print(f"Enter each row's elements separated by spaces (e.g, '1 2 3':")
+        print(f"Enter each row's elements separated by spaces (e.g, '1 2 3'):")
 
         user_matrix_data = []
         for i in range(n):
@@ -83,16 +84,16 @@ if __name__ == "__main__":
             row_data = list(map(float, row_input.split()))
             user_matrix_data.append(row_data)
 
-        emp_matrix = Matrix(user_matrix_data)
+        user_matrix = Matrix(user_matrix_data)
 
 
         print("\n--- Ingested Matrix ---")
-        print(emp_matrix)
-        print(f"Shape: {emp_matrix.shape}")
+        print(user_matrix)
+        print(f"Shape: {user_matrix.shape}")
 
-        if emp_matrix.is_square:
-            print(f"Standard Determinant: {emp_matrix.calculate_determinant()}")
-            print(f"Determinant in F2: {emp_matrix.calculate_determinant(mod=2)} ")
+        if user_matrix.is_square:
+            print(f"Standard Determinant: {user_matrix.calculate_determinant()}")
+            print(f"Determinant in F2: {user_matrix.calculate_determinant(mod=2)} ")
         else:
             print("Notice: This is not a Square Matrix. Determinant is undefined.")
 
