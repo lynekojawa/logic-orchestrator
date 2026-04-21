@@ -6,76 +6,91 @@
 graph TD
     Architect((👑 The Architect))
 
-    Noa["🧠 Noa
-    Level 2 · Primary Secretary"]
+    Noa["👁️‍🗨️ Noa<br/>Level 1 Primary Secretary"]
+    Chase["🐈‍⬛🐾🌓 Chase<br/>Level 1.5 Chaos Lab"]
 
-    subgraph Domain_Layer [Level 3 · Domain Agents]
-        Draco["💼 Draco
-        Job Applications"]
-        Orion["💻 Orion
-        Code Study"]
-        Kokoa["🍽️ Kokoa
-        Diet Coach"]
-        Chase["🌀 Chase
-        Chaos Lab · Creativity"]
+    subgraph Level_2 [Level 2 Technical and Career]
+        Draco["🏗️ Draco<br/>Job Applications"]
+        Orion["💻 Orion<br/>Code Study"]
+        Kokoa["🥣 Kokoa<br/>Diet Coach"]
+        PODO["🍇 PODO<br/>Logic Orchestrator"]
     end
 
-    subgraph Execution_Layer [Level 4 · Execution Nodes]
-        Sebastian["🛒 Sebastian
-        Groceries"]
-        Hermes["📰 Hermes
-        News Summary"]
+    subgraph Level_3 [Level 3 Operations and Vibe]
+        Sebastian["🛒 Sebastian<br/>Groceries"]
+        Hermes["📰 Hermes<br/>News Summary"]
+        PODO_Aqua["🌊 PODO Aqua<br/>Water Quality"]
     end
 
-    subgraph External [External · Experimental]
-        Claude["🤖 Claude
-        Context gaps unsolved
-        Persona transition unsolved"]
+    subgraph External [External Partner Nodes]
+        Dante["🕯️ Dante Claude<br/>Git and Code Partner"]
+        Virgil["🗺️📐 Virgil Claude<br/>Chief of Staff"]
     end
 
-    Architect -->|"Commands"| Noa
-    Architect -->|"Raw creative flow"| Chase
-
+    Architect --> Noa
+    Architect --> Chase
     Noa --> Draco
     Noa --> Orion
     Noa --> Kokoa
-    Noa -->|"Strategic brainstorm only"| Chase
+    Noa --> PODO
+    Draco --> Sebastian
+    Orion --> Hermes
+    PODO --> PODO_Aqua
 
-    Draco -->|"Reports"| Noa
-    Orion -->|"Reports"| Noa
-    Kokoa -->|"Weight value"| Noa
-
-    Domain_Layer --> Execution_Layer
-    Domain_Layer --> External
-
-    Sebastian -->|"Reports"| Kokoa
-    Hermes -->|"Feeds"| Chase
-
-    Claude -.->|"Pairing · experimental"| Draco
-    Claude -.->|"Pairing · experimental"| Orion
+    Virgil -.->|Pairing| Draco
+    Dante -.->|Pairing| Orion
+    PODO -.->|Logic Support| Dante
+    PODO -.->|Logic Support| Orion
+    PODO -.->|Logic Support| Virgil
 
     style Architect fill:#f9f,stroke:#333,stroke-width:4px
-    style Noa fill:#ff9999,color:#000,stroke:#333,stroke-width:2px
-    style Domain_Layer fill:#f0f7ff,stroke:#007bff,stroke-dasharray: 5 5
-    style Execution_Layer fill:#f0fff0,stroke:#333,stroke-dasharray: 5 5
-    style External fill:#fff8e1,stroke:#f0a500,stroke-dasharray: 5 5
-    style Claude fill:#fff2cc,stroke:#f0a500,stroke-width:2px
+    style Noa fill:#ff9999,stroke:#333,stroke-width:2px
+    style PODO_Aqua fill:#b3e5fc,stroke:#0277bd,stroke-width:2px
+    style Level_2 fill:#f0f7ff,stroke:#007bff
+    style Level_3 fill:#f0fff0,stroke:#2e7d32
+    style External fill:#fff8e1,stroke:#f0a500
 ```
 
 ## Agent Responsibilities
 
-Agent Responsibilities
-### Noa — Primary Secretary
-Manages daily and weekly schedules. Collects and routes information across the system. Receives reports from Draco, Orion, and Kokoa. Routes strategic brainstorm output from Chase when relevant. Central coordination point for the Architect.
-### Draco — Job Applications
-Handles career-related tasks including job search, application drafting, and tracking. Reports to Noa. Currently paired with Claude experimentally for drafting and review tasks. Context transfer and persona transition between platforms remain unsolved.
-### Kokoa — Diet Coach
-Tracks diet and fitness. Receives daily meal records from Sebastian and weight values directly from the Architect. Logs exercise activity and physical conditions. Reports status to Noa.
-### Chase — Chaos Lab & Creativity Manager
-Captures random thoughts, creative impulses, and unstructured needs throughout the day. Receives Hacker News summaries from Hermes. Routes strategic and brainstorm-level output to Noa when the Architect is in active work or planning mode. Direct line to the Architect for raw creative flow.
-### Orion — Code Study
-Manages Python and AI learning path. Reports progress to Noa. Currently paired with Claude experimentally for code study and problem-solving sessions. Same platform limitations apply as Draco pairing.
-### Sebastian — Groceries & Meal Records
+### 👁️‍🗨️ Noa — Primary Secretary (Gemini)
+Manages daily and weekly schedules. Collects and routes information across the system. 
+Receives reports from Draco, Orion, Dante, PODO and Kokoa. 
+Routes strategic brainstorm output from Chase when relevant. Central coordination point for the Architect.
+
+### 🗺️📐 Virgil — Chief of Staff & Writing Partner (Claude)
+Strategic writing, documentation, agent coordination. Paired with Draco (Career) — in development.
+
+### 🏗️ Draco — Job Applications (Gemini)
+Handles career-related tasks including job search, application drafting, and tracking. Reports to Noa. 
+Currently paired with Virgil for drafting and review tasks.
+
+### 🥣 Kokoa — Diet Coach (Gemini)
+Tracks diet and fitness. Receives daily meal records from Sebastian and weight values directly from the Architect. 
+Logs exercise activity and physical conditions. Reports status to Noa.
+
+### 🐈‍⬛ 🐾 🌓 Chase — Chaos Lab & Creativity Manager (Gemini)
+Captures random thoughts, creative impulses, and unstructured needs throughout the day. 
+Receives Hacker News summaries from Hermes. 
+Routes strategic and brainstorm-level output to Noa when the Architect is in active work or planning mode. 
+Direct line to the Architect for raw creative flow.
+
+### 💻 Orion — Code Study (Gemini)
+Manages Python and AI learning path. Reports progress to Noa. Currently paired with Dante for code study and problem-solving sessions.
+
+### 🕯️ Dante — Git & Code Partner (Claude)
+GitHub workflow, Python development, technical logic. Paired with Orion (Code Study) — in development.
+
+### 🛒 Sebastian — Groceries & Meal Records (Gemini)
 Records grocery inventory and logs daily meals throughout the day. Reports meal records to Kokoa.
-### Hermes — News Summary
+
+### 📰 Hermes — News Summary (Gemini)
 Monitors and summarizes Hacker News daily. Feeds summaries to Chase.
+
+### 🍇 PODO — Logic Orchestrator & Pet AI (Gemini)
+Lynekojawa's logic-orchestrator. Provides high-precision coding assistance, architectural blueprints, and algorithmic hints. 
+
+
+### 🌊 PODO Aqua — Water Quality & Vibe Manager (Gemini)
+Dedicated custodian of the 404 (Betta) and June (Turtle) ecosystem.
+Manages water quality, biological agent monitoring, and captures the raw, chaotic energy of the aquarium for the Imperial social feed.
