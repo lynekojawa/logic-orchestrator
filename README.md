@@ -14,21 +14,24 @@ black boxes.
 
 ### 🛠️ Active Projects
 
-| Project | What It Is | Status |
-|---|---|---|
-| **Logic-Orchestrator** | Multi-tier agent pyramid for cognitive task management | Active |
-| **Determinant-Engine** | Recursive n×n matrix solver with Finite Field (F_q) support | Phase 3 |
-| **ATS-Simulator** | Weighted keyword matcher to reverse-engineer resume scoring | Phase 4 |
+| Project                        | What It Is                                                            | Status      |
+|--------------------------------|-----------------------------------------------------------------------|-------------|
+| **Logic-Orchestrator** (HERE!) | Multi-tier agent pyramid for cognitive task management                | Active      |
+| **Project-EVE**                | Sending text message with shift cipher and key exchange using ElGamal | In Progress |
+| **mini-labs**                  | Coding labratory for curiosity and Experimental sandbox               | Active      |
+| **Water Quality Tracker**      | iOS app for aquarium/fish water chemistry monitoring                  | In Progress |
+| **Determinant-Engine**         | Recursive n×n matrix solver with Finite Field (F_q) support           | Completed   |
+| **ATS-Simulator**              | Weighted keyword matcher to reverse-engineer resume scoring           | Completed   |
 
-**Why these projects exist:**
-- The agent system because I needed cognitive infrastructure, not just a chatbot
-- The determinant calculator because finite field support didn't exist accessibly and I needed it for cryptography research
-- The ATS tool because I got tired of black box rejections and decided to build the box
+### Why these projects exist:
+1. Agent System: I needed cognitive infrastructure to scale my workflow, moving beyond basic chatbot functionality.
+2. Determinant Calculator: Built for cryptography research because accessible finite field support was non-existent.
+3. ATS Tool: Frustrated by the "black box" of hiring systems, so I built my own tools to analyze the process.
+4. Project EVE: Applying cryptographic theory to a practical, secure messaging system.
+5. Water Quality Tracker: I needed a better way to monitor and visualize data for my aquarium.
+6. Mini-labs: A dedicated sandbox for experimental projects and high-entropy coding.
 
 ---
-
-### 🤖 [Agent Roster](./docs/agents_roster.md)
-Full hierarchy, roles, versioning history, and current status of the Logic-Orchestrator.
 
 ### 📁 Repository Structure
 ```text
@@ -46,23 +49,25 @@ Full hierarchy, roles, versioning history, and current status of the Logic-Orche
 │   ├── sebastian/         # Groceries & Inventory
 │   └── hermes/            # News Summary
 ```
+### 🤖 [Agent Roster](./docs/agents_roster.md)
+Full hierarchy, roles, versioning history, and current status of the Logic-Orchestrator.
+
 Each agent folder contains:
 - Versioned prompt file (`agentname_prompt_v#_YYYY-MM-DD.md`)
 - Running notes log (`agentname_notes.md`)
 
----
-
-### 🛠️ [Infrastructure & Debugging Log](./docs/infrastructure.md)
-UTF-8 encoding fixes, API security hardening, terminal migration notes, 
-and system stability history.
-
----
-
 ### 🧮 Technical Toolkit
-- **Mathematics:** Linear Algebra, Discrete Math, Cryptography, PDE, Statistics
+#### Mathematics & Logic
+Linear Algebra, Discrete Math, Cryptography, PDE, Statistics, Graph Theory
+
+#### Programming & Data
 - **Languages:** Python(Intermediate-Growing), LaTeX, YAML
-- **AI Domain:** Multimodal Quality Auditing, Root Cause Analysis, 
-  Prompt Engineering, Context Engineering, Agentic Workflow Design, RLHF
+- **Database:** SQL, Supabase, Firebase
+- **Frameworks:** Streamlit
+
+#### AI & Infrastructure
+- **AI Domain:** Multimodal QA, RLHF, Agentic Workflow Design
+- **Systems:** Prompt Engineering, Context Engineering, API Security 
 
 ---
 
