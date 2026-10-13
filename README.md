@@ -4,7 +4,7 @@
 I build systems where mathematics, software engineering, and AI meet. My work ranges from cryptographic implementations and developer tools to hierarchical AI architectures and multimodal model evaluation. I'm particularly interested in understanding why complex systems fail — and designing architectures that make them more reliable.
 
 ### 📫 Connect
-[LinkedIn](https://www.linkedin.com/in/lynn-sherman-92092a345/) · [Portfolio](#) *(coming soon)*
+[LinkedIn](https://www.linkedin.com/in/lynn-sherman-92092a345/) · [Portfolio](https://github.com/lynekojawa/logic-orchestrator/tree/main/docs) 
 
 ---
 
